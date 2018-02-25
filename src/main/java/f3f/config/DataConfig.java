@@ -19,7 +19,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
-@EnableJpaRepositories("f3f.repository")
+@EnableJpaRepositories("f3f.data_connector.repository")
 public class DataConfig {
 
     private static final String PROP_DATABASE_DRIVER = "db.driver";

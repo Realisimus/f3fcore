@@ -1,6 +1,6 @@
-package f3f.repository;
+package f3f.data_connector.service;
 
-import f3f.entity.Pilot;
+import f3f.data_connector.entity.Pilot;
 
 import java.util.List;
 

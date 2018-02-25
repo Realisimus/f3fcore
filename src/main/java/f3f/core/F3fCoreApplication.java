@@ -1,10 +1,7 @@
 package f3f.core;
 
-import f3f.repository.PilotRepository;
-import f3f.repository.PilotService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication(scanBasePackages={
 		"f3f"})

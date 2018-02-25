@@ -1,4 +1,4 @@
-package f3f.entity;
+package f3f.data_connector.entity;
 
 import javax.persistence.*;
 
@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class Pilot {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 
@@ -24,6 +25,8 @@ public class Pilot {
 
     @Column(name = "EMAIL")
     private String email;
+
+    public Pilot() {}
 
     public Pilot(String login, String first_name, String last_name, String license, String email) {
         this.login = login;

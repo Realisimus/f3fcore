@@ -1,8 +1,8 @@
-package f3f.repository.impl;
+package f3f.data_connector.service.impl;
 
-import f3f.entity.Pilot;
-import f3f.repository.PilotRepository;
-import f3f.repository.PilotService;
+import f3f.data_connector.entity.Pilot;
+import f3f.data_connector.repository.PilotRepository;
+import f3f.data_connector.service.PilotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
