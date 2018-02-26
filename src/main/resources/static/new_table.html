@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body>
+
+<form method="post" action="">
+    <table width="650" border="1" cellspacing="0" cellpadding="5">
+        <caption>
+            <!-- Кол-во элементов option и их значения value можно задать произвольно //-->
+            <select id="rows_setup">
+                <option value="0">--Установить кол-во строк--</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="4">4</option>
+                <option value="6">6</option>
+                <option value="10">10</option>
+            </select>
+        </caption>
+        <!-- Заголовки //-->
+        <thead>
+        <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Time</th>
+            <th scope="col">Penalty</th>
+            <th scope="col">Total</th>
+        </tr>
+        </thead>
+        <!-- Сюда будем добавлять строки //-->
+        <tbody id="dynamic"></tbody>
+    </table>
+    <input name="sub" type="submit" value="SEND">
+</form>
+<script>
+    /* Навешиваем логику: */
+    setupTable(
+        "dynamic", /* ID элемента <tbody> таблицы */
+        "rows_setup", /* ID элемента <select> для установки кол-ва строк */
+        {1:"val1", 2:"val2", 3:"val3", 4:"val4"}, /* Конфигурация строки таблицы */
+
+        function (row, fieldName) { /* Ф-ция должна возвращать HTMLElement тип - поле формы */
+            var ELEMENT = document.createElement("INPUT");
+
+            ELEMENT.name = fieldName + "[]";
+            ELEMENT.type = 'number';
+            ELEMENT.max = 100;
+            ELEMENT.min = 0;
+
+            return ELEMENT;
+        }
+    );
+</script>
+</body>
+</html>
