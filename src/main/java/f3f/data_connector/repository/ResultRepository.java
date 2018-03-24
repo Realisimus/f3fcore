@@ -14,6 +14,12 @@ public interface ResultRepository extends CrudRepository<Result, Long> {
     List<Result> findResultsByCup_id(Long id);
 
     @Query("select r from Result r where r.cup_id = ?1 and r.round = ?2")
-    List<Result> findResultsByCup_idAndRound(Long cup_id, Long round);
+    List<Result> findResultsByCup_idAndRound(Long cup_id, Integer round);
+
+    @Query("select r.time from Result r where r.cup_id = ?1 and r.round = ?2")
+    List<Float> findTimeByCup_idAndRound(Long cup_id, Integer round);
+
+    @Query("select r from Result r where r.cup_id = ?1 and r.pilot_id = ?2 and r.round = ?3")
+    List<Result> findResultsByCup_idAndPilotIdAndRound(Long cup_id, Long pilot_id, Integer round);
 
 }

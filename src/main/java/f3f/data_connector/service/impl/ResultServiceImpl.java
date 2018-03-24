@@ -25,12 +25,26 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    public List<Result> getByCupIdAndRound(Long cup_id, Long round) {
+    public List<Result> getByCupIdAndRound(Long cup_id, Integer round) {
         return resultRepository.findResultsByCup_idAndRound(cup_id, round);
     }
 
     @Override
+    public List<Float> getTimesByCupIdAndRound(Long cup_id, Integer round) {
+        return resultRepository.findTimeByCup_idAndRound(cup_id, round);
+    }
+
+    @Override
+    public List<Result> getByCupIdAndPilotIdAndRound(Long cup_id, Long pilot_id, Integer round) {
+        return null;
+    }
+
+    @Override
     public void save(Result result) {
+        List<Result> existingResults = resultRepository.findResultsByCup_idAndPilotIdAndRound(result.getCup_id(), result.getPilot_id(), result.getRound());
+        if (existingResults.size() > 0) {
+            resultRepository.delete(existingResults.get(0).getId());
+        }
         resultRepository.save(result);
     }
 

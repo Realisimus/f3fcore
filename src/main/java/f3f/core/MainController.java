@@ -2,19 +2,16 @@ package f3f.core;
 
 import f3f.core.tools.ResultTools;
 import f3f.data_connector.entity.Cup;
-import f3f.data_connector.entity.Cup_pilot;
 import f3f.data_connector.entity.Pilot;
 import f3f.data_connector.entity.Result;
 import f3f.data_connector.service.CupService;
-import f3f.data_connector.service.Cup_pilotService;
 import f3f.data_connector.service.PilotService;
 import f3f.data_connector.service.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,9 +25,6 @@ public class MainController {
     CupService cupService;
 
     @Autowired
-    Cup_pilotService cup_pilotService;
-
-    @Autowired
     ResultService resultService;
 
     private ResultTools resultTools;
@@ -42,10 +36,20 @@ public class MainController {
     }
 
     @RequestMapping(value = "/add_time", method = RequestMethod.POST)
-    public void addTimeAndRecalculate(Long pilot_id, Long cup_id, Long round, Float time, Integer penalty) {
+    public ResponseEntity addTimeAndRecalculate(@RequestParam String pilot_id_s,
+                                      @RequestParam String cup_id_s,
+                                      @RequestParam String round_s,
+                                      @RequestParam String time_s,
+                                      @RequestParam String penalty_s) {
+        Long pilot_id = Long.parseLong(pilot_id_s);
+        Long cup_id = Long.parseLong(cup_id_s);
+        Integer round = Integer.parseInt(round_s);
+        Float time = Float.parseFloat(time_s);
+        Integer penalty = Integer.parseInt(penalty_s);
         Result result = new Result(pilot_id, cup_id, round, time, penalty);
         resultService.save(result);
         resultRecalculate(cup_id, round);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @RequestMapping(path = "/pilots", method = RequestMethod.GET)
@@ -79,14 +83,24 @@ public class MainController {
         return pilotService.getPilotsByCupId(cup_id);
     }
 
-    private void resultRecalculate(Long cup_id, Long round_id) {
-        List<Result> results = resultService.getByCupIdAndRound(cup_id, round_id);
-        List<Float> times = resultTools.getTimes(results);
-        if (times.size() == cup_pilotService.getAll().size()) {
+    private void resultRecalculate(Long cup_id, Integer round) {
+        List<Result> results = resultService.getByCupIdAndRound(cup_id, round);
+        List<Float> times = resultService.getTimesByCupIdAndRound(cup_id, round);
+        if (times.size() == pilotService.getPilotsByCupId(cup_id).size()) {
             for (Result result : results) {
-                result.setScore(1000 * resultTools.minTime(times) / result.getTime());
+                result.setScore(1000 * minTime(times) / result.getTime());
             }
         }
+    }
+
+    private Float minTime(List<Float> times) {
+        Float minTime = times.get(0);
+        for (Float time : times) {
+            if (time < minTime) {
+                minTime = time;
+            }
+        }
+        return minTime;
     }
 
 }

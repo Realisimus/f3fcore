@@ -1,7 +1,6 @@
 package f3f.data_connector.service.impl;
 
 import f3f.data_connector.entity.Cup_pilot;
-import f3f.data_connector.entity.Pilot;
 import f3f.data_connector.repository.Cup_pilotRepository;
 import f3f.data_connector.service.Cup_pilotService;
 import org.springframework.beans.factory.annotation.Autowired;

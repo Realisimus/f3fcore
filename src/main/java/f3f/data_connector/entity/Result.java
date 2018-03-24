@@ -18,7 +18,7 @@ public class Result {
     private Long cup_id;
 
     @Column(name = "ROUND")
-    private Long round;
+    private Integer round;
 
     @Column(name = "TIME")
     private Float time;
@@ -31,7 +31,7 @@ public class Result {
 
     public Result() {}
 
-    public Result(Long pilot_id, Long cup_id, Long round, Float time, Integer penalty) {
+    public Result(Long pilot_id, Long cup_id, Integer round, Float time, Integer penalty) {
         this.pilot_id = pilot_id;
         this.cup_id = cup_id;
         this.round = round;
@@ -59,11 +59,11 @@ public class Result {
         this.cup_id = cup_id;
     }
 
-    public Long getRound() {
+    public Integer getRound() {
         return round;
     }
 
-    public void setRound(Long round) {
+    public void setRound(Integer round) {
         this.round = round;
     }
 
