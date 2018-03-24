@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <title>Cup 1</title>
     <style>
-        table, th, td
+        table, td
         {
             margin:10px 0;
             border:solid 1px #333;
             padding:2px 4px;
             font:15px Verdana;
         }
-        th {
+        thead {
             font-weight:bold;
+            font:20px Verdana;
         }
     </style>
 
@@ -25,10 +26,13 @@
 <a href='javascript://' onclick='fill();return false;'>Заполнить таблицу</a>
 
 <table id='pilots'>
-    <tbody>
+    <thead>
     <tr>
         <td>ID</td><td>Login</td><td>First Name</td><td>Last Name</td><td>License</td>
     </tr>
+    </thead>
+    <tbody>
+
     </tbody>
 </table>
 
