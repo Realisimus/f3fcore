@@ -22,7 +22,7 @@ public class Cup_pilotServiceImpl implements Cup_pilotService {
     }
 
     @Override
-    public List<Pilot> getPilotsByCupId(Long cup_id) {
+    public List<Cup_pilot> getPilotsByCupId(Long cup_id) {
         return cup_pilotRepository.findPilotsByCup_id(cup_id);
     }
 

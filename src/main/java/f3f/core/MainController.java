@@ -27,20 +27,20 @@ public class MainController {
     CupService cupService;
 
     @Autowired
-    ResultService resultService;
+    Cup_pilotService cup_pilotService;
 
     @Autowired
-    Cup_pilotService cup_pilotService;
+    ResultService resultService;
 
     private ResultTools resultTools;
 
-    @RequestMapping(value = "/add_pilot", method = RequestMethod.GET)
+    @RequestMapping(value = "/add_pilot", method = RequestMethod.POST)
     public void savePilot(String login, String first_name, String last_name, String license, String email) {
         Pilot pilot = new Pilot(login, first_name, last_name, license, email);
         pilotService.save(pilot);
     }
 
-    @RequestMapping(value = "/add_time", method = RequestMethod.GET)
+    @RequestMapping(value = "/add_time", method = RequestMethod.POST)
     public void addTimeAndRecalculate(Long pilot_id, Long cup_id, Long round, Float time, Integer penalty) {
         Result result = new Result(pilot_id, cup_id, round, time, penalty);
         resultService.save(result);
@@ -52,7 +52,7 @@ public class MainController {
         return pilotService.getAll();
     }
 
-    @RequestMapping(path = "/pilots/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/pilot/{id}", method = RequestMethod.GET)
     public @ResponseBody Pilot getPilotById(@PathVariable Long id) {
         return pilotService.getById(id);
     }
@@ -63,7 +63,7 @@ public class MainController {
         return cupService.getAll();
     }
 
-    @RequestMapping(path = "/cups/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/cup/{id}", method = RequestMethod.GET)
     public @ResponseBody Cup getCupById(@PathVariable Long id) {
         return cupService.getById(id);
     }

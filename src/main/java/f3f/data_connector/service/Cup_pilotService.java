@@ -8,7 +8,7 @@ import java.util.List;
 public interface Cup_pilotService {
 
     List<Cup_pilot> getAll();
-    List<Pilot> getPilotsByCupId(Long cup_id);
+    List<Cup_pilot> getPilotsByCupId(Long cup_id);
     void removeById(Long id);
     void save(Cup_pilot cup_pilot);
 
