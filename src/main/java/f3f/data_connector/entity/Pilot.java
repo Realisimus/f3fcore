@@ -1,6 +1,8 @@
 package f3f.data_connector.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "PILOTS")
@@ -11,6 +13,8 @@ public class Pilot {
     @Column(name = "ID")
     private Long id;
 
+    @NotNull
+    @Size(max = 16)
     @Column(name = "LOGIN")
     private String login;
 

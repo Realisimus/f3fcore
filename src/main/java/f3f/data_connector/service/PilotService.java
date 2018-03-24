@@ -8,6 +8,7 @@ public interface PilotService {
 
     Pilot getById(Long id);
     List<Pilot> getAll();
+    List<Pilot> getPilotsByCupId(Long cup_id);
     void removeById(Long id);
     void save(Pilot pilot);
 

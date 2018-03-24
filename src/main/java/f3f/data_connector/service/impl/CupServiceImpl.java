@@ -16,7 +16,7 @@ public class CupServiceImpl implements CupService {
 
     @Override
     public Cup getById(Long id) {
-        return null;
+        return cupRepository.findOne(id);
     }
 
     @Override

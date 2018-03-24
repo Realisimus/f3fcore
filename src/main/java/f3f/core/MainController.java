@@ -2,6 +2,7 @@ package f3f.core;
 
 import f3f.core.tools.ResultTools;
 import f3f.data_connector.entity.Cup;
+import f3f.data_connector.entity.Cup_pilot;
 import f3f.data_connector.entity.Pilot;
 import f3f.data_connector.entity.Result;
 import f3f.data_connector.service.CupService;
@@ -63,9 +64,19 @@ public class MainController {
         return cupService.getAll();
     }
 
-    @RequestMapping(path = "/cup/{id}", method = RequestMethod.GET)
-    public @ResponseBody Cup getCupById(@PathVariable Long id) {
-        return cupService.getById(id);
+    @RequestMapping(path = "/cup/{cup_id}", method = RequestMethod.GET)
+    public @ResponseBody Cup getCupById(@PathVariable Long cup_id) {
+        return cupService.getById(cup_id);
+    }
+
+    @RequestMapping(path = "/cup/{cup_id}/rounds", method = RequestMethod.GET)
+    public @ResponseBody List<Result> getRoundsByCupId(@PathVariable Long cup_id) {
+        return resultService.getByCupId(cup_id);
+    }
+
+    @RequestMapping(path = "/cup/{cup_id}/pilots", method = RequestMethod.GET)
+    public @ResponseBody List<Pilot> getPilotsByCupId(@PathVariable Long cup_id) {
+        return pilotService.getPilotsByCupId(cup_id);
     }
 
     private void resultRecalculate(Long cup_id, Long round_id) {
