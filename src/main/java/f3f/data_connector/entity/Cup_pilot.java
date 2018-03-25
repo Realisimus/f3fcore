@@ -17,6 +17,13 @@ public class Cup_pilot {
     @Column(name = "PILOT_ID")
     private Long pilot_id;
 
+    @Column(name = "SCORE")
+    private Float score;
+
+    @Column(name = "RANK")
+
+    private Integer rank;
+
     public Cup_pilot() {
     }
 
@@ -43,6 +50,22 @@ public class Cup_pilot {
 
     public void setPilot_id(Long pilot_id) {
         this.pilot_id = pilot_id;
+    }
+
+    public Float getScore() {
+        return score;
+    }
+
+    public void setScore(Float score) {
+        this.score = score;
+    }
+
+    public Integer getRank() {
+        return rank;
+    }
+
+    public void setRank(Integer rank) {
+        this.rank = rank;
     }
 }
 
