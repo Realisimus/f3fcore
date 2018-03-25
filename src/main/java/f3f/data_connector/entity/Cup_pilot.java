@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "CUP_PILOTS")
-public class Cup_pilot {
+public class Cup_pilot implements Comparable<Cup_pilot>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,12 +17,17 @@ public class Cup_pilot {
     @Column(name = "PILOT_ID")
     private Long pilot_id;
 
+    @Column(name = "RANK")
+    private Integer rank;
+
     @Column(name = "SCORE")
     private Float score;
 
-    @Column(name = "RANK")
+    @Column(name = "PERCENTS")
+    private Float percents;
 
-    private Integer rank;
+    @Column(name = "RAW_SCORE")
+    private Float raw_score;
 
     public Cup_pilot() {
     }
@@ -52,6 +57,14 @@ public class Cup_pilot {
         this.pilot_id = pilot_id;
     }
 
+    public Integer getRank() {
+        return rank;
+    }
+
+    public void setRank(Integer rank) {
+        this.rank = rank;
+    }
+
     public Float getScore() {
         return score;
     }
@@ -60,12 +73,25 @@ public class Cup_pilot {
         this.score = score;
     }
 
-    public Integer getRank() {
-        return rank;
+    public Float getPercents() {
+        return percents;
     }
 
-    public void setRank(Integer rank) {
-        this.rank = rank;
+    public void setPercents(Float percents) {
+        this.percents = percents;
+    }
+
+    public Float getRaw_score() {
+        return raw_score;
+    }
+
+    public void setRaw_score(Float raw_score) {
+        this.raw_score = raw_score;
+    }
+
+    @Override
+    public int compareTo(Cup_pilot o) {
+        return (int) ((o.getScore() - this.getScore()) * 100);
     }
 }
 
