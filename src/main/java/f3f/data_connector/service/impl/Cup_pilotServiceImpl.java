@@ -25,6 +25,11 @@ public class Cup_pilotServiceImpl implements Cup_pilotService {
     }
 
     @Override
+    public List<Long> getPilotIdByCupId(Long cup_id) {
+        return cup_pilotRepository.getPilotIdByCup_id(cup_id);
+    }
+
+    @Override
     public void removeById(Long id) {
 
     }

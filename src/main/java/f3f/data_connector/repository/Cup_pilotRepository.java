@@ -13,4 +13,7 @@ public interface Cup_pilotRepository extends CrudRepository<Cup_pilot, Long> {
     @Query("select c from Cup_pilot c where c.cup_id = ?1")
     List<Cup_pilot> getByCup_id(Long cup_id);
 
+    @Query("select c.pilot_id from Cup_pilot c where c.cup_id = ?1")
+    List<Long> getPilotIdByCup_id(Long cup_id);
+
 }

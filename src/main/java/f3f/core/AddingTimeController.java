@@ -1,6 +1,7 @@
 package f3f.core;
 
 import f3f.data_connector.entity.Cup_pilot;
+import f3f.data_connector.entity.Pilot;
 import f3f.data_connector.entity.Result;
 import f3f.data_connector.service.Cup_pilotService;
 import f3f.data_connector.service.PilotService;
@@ -39,19 +40,25 @@ public class AddingTimeController {
         Integer round = Integer.parseInt(round_s);
         Float time = Float.parseFloat(time_s);
         Integer penalty = Integer.parseInt(penalty_s);
-        Result result = new Result(pilot_id, cup_id, round, time, penalty);
-        resultService.save(result);
-
+        List<Result> results = resultService.getByCupIdAndPilotIdAndRound(cup_id, pilot_id, round);
+        if (results.size() > 0) {
+            results.get(0).setTime(time);
+            results.get(0).setPenalty(penalty);
+            resultService.saveAll(results);
+        } else {
+            Result result = new Result(pilot_id, cup_id, round, time, penalty);
+            resultService.save(result);
+        }
         updateResultsScore(cup_id, round);
-
         return new ResponseEntity(HttpStatus.OK);
 
     }
 
     private void updateResultsScore(Long cup_id, Integer round) {
         List<Result> results = resultService.getByCupIdAndRound(cup_id, round);
+        List<Pilot> pilots = (List<Pilot>) pilotService.getPilotsByCupId(cup_id);
 
-        if (results.size() == pilotService.getPilotsByCupId(cup_id).size())
+        if (results.size() == ((List<Pilot>) pilotService.getPilotsByCupId(cup_id)).size())
         {
             results = updateResultsScore(results);
             results = updateResultsPercentages(results);

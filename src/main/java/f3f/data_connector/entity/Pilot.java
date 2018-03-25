@@ -36,6 +36,8 @@ public class Pilot {
     @Column(name = "CITY")
     private String city;
 
+    public Pilot() {}
+
     public Pilot(String login) {}
 
     public Pilot(String login, String first_name, String last_name, String license, String email, String phone, String city) {
@@ -90,5 +92,21 @@ public class Pilot {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }
