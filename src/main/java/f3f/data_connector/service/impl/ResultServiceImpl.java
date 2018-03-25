@@ -46,7 +46,7 @@ public class ResultServiceImpl implements ResultService {
             Result r = existingResults.get(0);
             r.setTime(result.getTime());
             r.setPenalty(result.getPenalty());
-            r.setScore(result.getScore());
+            r.setScore(0f);
         } else {
             resultRepository.save(result);
         }

@@ -30,14 +30,22 @@ public class Pilot {
     @Column(name = "EMAIL")
     private String email;
 
-    public Pilot() {}
+    @Column(name = "PHONE")
+    private String phone;
 
-    public Pilot(String login, String first_name, String last_name, String license, String email) {
+    @Column(name = "CITY")
+    private String city;
+
+    public Pilot(String login) {}
+
+    public Pilot(String login, String first_name, String last_name, String license, String email, String phone, String city) {
         this.login = login;
         this.first_name = first_name;
         this.last_name = last_name;
         this.license = license;
         this.email = email;
+        this.phone = phone;
+        this.city = city;
     }
 
     public Long getId() {

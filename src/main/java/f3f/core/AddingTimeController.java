@@ -33,7 +33,7 @@ public class AddingTimeController {
                                                 @RequestParam String cup_id_s,
                                                 @RequestParam String round_s,
                                                 @RequestParam String time_s,
-                                                @RequestParam String penalty_s) {
+                                                String penalty_s) {
         Long pilot_id = Long.parseLong(pilot_id_s);
         Long cup_id = Long.parseLong(cup_id_s);
         Integer round = Integer.parseInt(round_s);

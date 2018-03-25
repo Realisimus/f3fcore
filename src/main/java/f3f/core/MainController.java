@@ -31,22 +31,6 @@ public class MainController {
     @Autowired
     protected Cup_pilotService cup_pilotService;
 
-    @RequestMapping(value = "/add_pilot", method = RequestMethod.POST)
-    public void savePilot(String login, String first_name, String last_name, String license, String email) {
-        Pilot pilot = new Pilot(login, first_name, last_name, license, email);
-        pilotService.save(pilot);
-    }
-
-    @RequestMapping(path = "/pilots", method = RequestMethod.GET)
-    public @ResponseBody List<Pilot> getAllPilots() {
-        return pilotService.getAll();
-    }
-
-    @RequestMapping(path = "/pilot/{id}", method = RequestMethod.GET)
-    public @ResponseBody Pilot getPilotById(@PathVariable Long id) {
-        return pilotService.getById(id);
-    }
-
 
     @RequestMapping(path = "/cups", method = RequestMethod.GET)
     public @ResponseBody List<Cup> getAllCups() {
@@ -61,11 +45,6 @@ public class MainController {
     @RequestMapping(path = "/cup/{cup_id}/rounds", method = RequestMethod.GET)
     public @ResponseBody List<Result> getRoundsByCupId(@PathVariable Long cup_id) {
         return resultService.getByCupId(cup_id);
-    }
-
-    @RequestMapping(path = "/cup/{cup_id}/pilots", method = RequestMethod.GET)
-    public @ResponseBody List<Pilot> getPilotsByCupId(@PathVariable Long cup_id) {
-        return pilotService.getPilotsByCupId(cup_id);
     }
 
 }
