@@ -41,35 +41,44 @@ public class AddingTimeController {
         Integer penalty = Integer.parseInt(penalty_s);
         Result result = new Result(pilot_id, cup_id, round, time, penalty);
         resultService.save(result);
-        resultRecalculate(cup_id, round);
+
+        updateResultsScore(cup_id, round);
+
         return new ResponseEntity(HttpStatus.OK);
 
     }
 
-    private void resultRecalculate(Long cup_id, Integer round) {
+    private void updateResultsScore(Long cup_id, Integer round) {
         List<Result> results = resultService.getByCupIdAndRound(cup_id, round);
-        if (results.size() == pilotService.getPilotsByCupId(cup_id).size()) {
-            Float minTime = minTime(results);
-            for (Result r : results) {
-                r.setScore(1000 * minTime / r.getTime());
-            }
+
+        if (results.size() == pilotService.getPilotsByCupId(cup_id).size())
+        {
+            results = updateResultsScore(results);
+            results = updateResultsPercentages(results);
             resultService.saveAll(results);
             updateTotalScore(cup_id);
         }
     }
 
     private void updateTotalScore(Long cup_id) {
-        List<Cup_pilot> total = cup_pilotService.getByCupId(cup_id);
-        Float minScore1 = null;
-        Float minScore2 = null;
-        int i = 0;
-        for (Cup_pilot cp : total) {
-            List<Result> results = resultService.getByCupIdAndPilotId(cup_id, cp.getPilot_id());
+        List<Cup_pilot> cup_pilots = cup_pilotService.getByCupId(cup_id);
+
+        cup_pilots = updateCup_pilotsScoreAndRawScore(cup_pilots, cup_id);
+        cup_pilots = updateCup_pilotsRank(cup_pilots);
+        cup_pilots = updateCup_pilotsPercentages(cup_pilots);
+        cup_pilotService.saveAll(cup_pilots);
+    }
+
+    private List<Cup_pilot> updateCup_pilotsScoreAndRawScore(List<Cup_pilot> cup_pilots, Long cup_id) {
+        Float minScore1;
+        Float minScore2;
+        for (Cup_pilot cp : cup_pilots) {
+            List<Result> resultsForPilot = resultService.getByCupIdAndPilotId(cup_id, cp.getPilot_id());
             minScore1 = 1000f;
             minScore2 = 1000f;
-            cp.setScore((float) 0);
-            cp.setRaw_score((float) 0);
-            for (Result r : results) {
+            cp.setScore(0f);
+            cp.setRaw_score(0f);
+            for (Result r : resultsForPilot) {
                 cp.setScore(cp.getScore() + r.getScore());
                 cp.setRaw_score(cp.getRaw_score() + r.getScore());
                 if (r.getScore() < minScore1) {
@@ -79,24 +88,49 @@ public class AddingTimeController {
                     minScore2 = r.getScore();
                 }
             }
-            if (results.size() < 15) {
+            if (resultsForPilot.size() < 15 && resultsForPilot.size() > 1) {
                 cp.setScore(cp.getScore() - minScore1);
-            } else {
-                cp.setScore(cp.getScore() - minScore1 - minScore2);
+            }
+            if (resultsForPilot.size() > 14) {
+                cp.setScore(cp.getScore() - minScore2);
             }
         }
-        cup_pilotService.saveAll(total);
-        updateRank(cup_id);
+        return cup_pilots;
     }
 
-    private void updateRank(Long cup_id) {
-        List<Cup_pilot> total = cup_pilotService.getByCupId(cup_id);
+    private List<Cup_pilot> updateCup_pilotsRank(List<Cup_pilot> total) {
         Collections.sort(total);
         for (int i = 0; i < total.size(); i++) {
             total.get(i).setRank(i+1);
             total.get(i).setPercents(100 * total.get(i).getScore() / total.get(0).getScore());
         }
-        cup_pilotService.saveAll(total);
+        return total;
+    }
+
+    private List<Cup_pilot> updateCup_pilotsPercentages(List<Cup_pilot> total) {
+        Collections.sort(total);
+        for (int i = 0; i < total.size(); i++) {
+            total.get(i).setRank(i+1);
+            total.get(i).setPercents(100 * total.get(i).getScore() / total.get(0).getScore());
+        }
+        return total;
+    }
+
+    private List<Result> updateResultsScore(List<Result> results) {
+        Float minTime = minTime(results);
+        for (Result r : results)
+        {
+            r.setScore(1000 * minTime / r.getTime());
+        }
+        return results;
+    }
+
+    private List<Result> updateResultsPercentages(List<Result> results) {
+        Collections.sort(results);
+        for (Result r : results) {
+            r.setPercentages(100 * r.getScore() / results.get(0).getScore());
+        }
+        return results;
     }
 
     private Float minTime(List<Result> results) {
@@ -107,16 +141,6 @@ public class AddingTimeController {
             }
         }
         return minTime;
-    }
-
-    private Float minScore(List<Cup_pilot> cup_pilots) {
-        Float minScore = cup_pilots.get(0).getScore();
-        for (Cup_pilot cup_pilot : cup_pilots) {
-            if (cup_pilot.getScore() < minScore) {
-                minScore = cup_pilot.getScore();
-            }
-        }
-        return minScore;
     }
 
 }

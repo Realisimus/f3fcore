@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "RESULTS")
-public class Result {
+public class Result implements Comparable<Result>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,9 @@ public class Result {
 
     @Column(name = "SCORE")
     private Float score;
+
+    @Column(name = "PERCENTAGES")
+    private Float percentages;
 
     public Result() {}
 
@@ -90,4 +93,18 @@ public class Result {
     public void setScore(Float score) {
         this.score = score;
     }
+
+    public Float getPercentages() {
+        return percentages;
+    }
+
+    public void setPercentages(Float percentages) {
+        this.percentages = percentages;
+    }
+
+    @Override
+    public int compareTo(Result r) {
+        return (int) ((r.getScore() - this.getScore()) * 100);
+    }
+
 }
