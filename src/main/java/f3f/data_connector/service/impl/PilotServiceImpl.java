@@ -24,6 +24,11 @@ public class PilotServiceImpl implements PilotService {
     }
 
     @Override
+    public Pilot getByLogin(String login) {
+        return pilotRepository.getPilotByLogin(login);
+    }
+
+    @Override
     public List<Pilot> getAll() {
         return (List<Pilot>) pilotRepository.findAll();
     }
