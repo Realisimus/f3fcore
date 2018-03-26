@@ -27,6 +27,12 @@ public class Cup {
         return id;
     }
 
+    public Cup(String name, String description, Date date) {
+        this.name = name;
+        this.description = description;
+        this.date = date;
+    }
+
     public String getName() {
         return name;
     }
