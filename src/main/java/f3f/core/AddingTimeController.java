@@ -49,12 +49,12 @@ public class AddingTimeController {
             Result result = new Result(pilot_id, cup_id, round, time, penalty);
             resultService.save(result);
         }
-        updateResultsScore(cup_id, round);
+        updateRoundScore(cup_id, round);
         return new ResponseEntity(HttpStatus.OK);
 
     }
 
-    private void updateResultsScore(Long cup_id, Integer round) {
+    private void updateRoundScore(Long cup_id, Integer round) {
         List<Result> results = resultService.getByCupIdAndRound(cup_id, round);
         List<Pilot> pilots = (List<Pilot>) pilotService.getPilotsByCupId(cup_id);
 
@@ -127,7 +127,11 @@ public class AddingTimeController {
         Float minTime = minTime(results);
         for (Result r : results)
         {
-            r.setScore(1000 * minTime / r.getTime());
+            if (r.getTime() > 0) {
+                r.setScore(round(1000 * minTime / r.getTime()));
+            } else {
+                r.setScore(0f);
+            }
         }
         return results;
     }
@@ -141,13 +145,19 @@ public class AddingTimeController {
     }
 
     private Float minTime(List<Result> results) {
-        Float minTime = results.get(0).getTime();
+        Float minTime = 99999999999999999f;
         for (Result result : results) {
-            if (result.getTime() < minTime) {
+            if (result.getTime() < minTime && result.getTime() > 0)  {
                 minTime = result.getTime();
             }
         }
         return minTime;
+    }
+
+    private static float round(float number) {
+        int pow = 100;
+        float tmp = number * pow;
+        return (float) (int) ((tmp - (int) tmp) >= 0.5f ? tmp + 1 : tmp) / pow;
     }
 
 }
