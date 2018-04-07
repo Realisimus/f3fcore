@@ -11,32 +11,34 @@ public class Result implements Comparable<Result>{
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "PILOT_ID")
-    private Long pilot_id;
+    @ManyToOne
+    @JoinColumn(name = "PILOT_ID")
+    private Pilot pilot;
 
-    @Column(name = "CUP_ID")
-    private Long cup_id;
+    @ManyToOne
+    @JoinColumn(name = "CUP_ID")
+    private Cup cup;
 
     @Column(name = "ROUND")
     private Integer round;
 
     @Column(name = "TIME")
-    private Float time;
+    private Integer time;
 
     @Column(name = "PENALTY")
     private Integer penalty;
 
     @Column(name = "SCORE")
-    private Float score;
+    private Integer score;
 
     @Column(name = "PERCENTAGES")
-    private Float percentages;
+    private Integer percentages;
 
     public Result() {}
 
-    public Result(Long pilot_id, Long cup_id, Integer round, Float time, Integer penalty) {
-        this.pilot_id = pilot_id;
-        this.cup_id = cup_id;
+    public Result(Pilot pilot, Cup cup, Integer round, Integer time, Integer penalty) {
+        this.pilot = pilot;
+        this.cup = cup;
         this.round = round;
         this.time = time;
         this.penalty = penalty;
@@ -46,20 +48,20 @@ public class Result implements Comparable<Result>{
         return id;
     }
 
-    public Long getPilot_id() {
-        return pilot_id;
+    public Pilot getPilot() {
+        return pilot;
     }
 
-    public void setPilot_id(Long pilot_id) {
-        this.pilot_id = pilot_id;
+    public void setPilot(Pilot pilot) {
+        this.pilot = pilot;
     }
 
-    public Long getCup_id() {
-        return cup_id;
+    public Cup getCup() {
+        return cup;
     }
 
-    public void setCup_id(Long cup_id) {
-        this.cup_id = cup_id;
+    public void setCup(Cup cup) {
+        this.cup = cup;
     }
 
     public Integer getRound() {
@@ -70,11 +72,11 @@ public class Result implements Comparable<Result>{
         this.round = round;
     }
 
-    public Float getTime() {
+    public Integer getTime() {
         return time;
     }
 
-    public void setTime(Float time) {
+    public void setTime(Integer time) {
         this.time = time;
     }
 
@@ -86,19 +88,19 @@ public class Result implements Comparable<Result>{
         this.penalty = penalty;
     }
 
-    public Float getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(Float score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
 
-    public Float getPercentages() {
+    public int getPercentages() {
         return percentages;
     }
 
-    public void setPercentages(Float percentages) {
+    public void setPercentages(Integer percentages) {
         this.percentages = percentages;
     }
 

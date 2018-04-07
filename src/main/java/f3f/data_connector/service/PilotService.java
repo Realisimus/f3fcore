@@ -9,7 +9,6 @@ public interface PilotService {
     Pilot getById(Long id);
     Pilot getByLogin(String login);
     List<Pilot> getAll();
-    List<Pilot> getPilotsByCupId(Long cup_id);
     void removeById(Long id);
     void save(Pilot pilot);
 

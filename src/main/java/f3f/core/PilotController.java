@@ -1,7 +1,8 @@
 package f3f.core;
 
 import f3f.data_connector.entity.Pilot;
-import f3f.data_connector.service.Cup_pilotService;
+import f3f.data_connector.service.CupService;
+import f3f.data_connector.service.TotalResultService;
 import f3f.data_connector.service.PilotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,10 @@ public class PilotController {
     protected PilotService pilotService;
 
     @Autowired
-    protected Cup_pilotService cup_pilotService;
+    protected TotalResultService totalResultService;
+
+    @Autowired
+    protected CupService cupService;
 
     @RequestMapping(value = "/add_pilot", method = RequestMethod.POST)
     public ResponseEntity savePilot(@RequestParam String login,
@@ -57,6 +61,6 @@ public class PilotController {
 
     @RequestMapping(path = "/pilots/{cup_id}", method = RequestMethod.GET)
     public @ResponseBody List<Pilot> getPilotsByCupId(@PathVariable Long cup_id) {
-        return pilotService.getPilotsByCupId(cup_id);
+        return totalResultService.getPilotsByCup(cupService.getById(cup_id));
     }
 }

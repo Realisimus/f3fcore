@@ -1,5 +1,7 @@
 package f3f.data_connector.service.impl;
 
+import f3f.data_connector.entity.Cup;
+import f3f.data_connector.entity.Pilot;
 import f3f.data_connector.entity.Result;
 import f3f.data_connector.repository.ResultRepository;
 import f3f.data_connector.service.ResultService;
@@ -15,28 +17,23 @@ public class ResultServiceImpl implements ResultService {
     protected ResultRepository resultRepository;
 
     @Override
-    public Result getById(Long id) {
-        return resultRepository.findOne(id);
+    public List<Result> getByCup(Cup cup) {
+        return resultRepository.findByCup(cup);
     }
 
     @Override
-    public List<Result> getByCupId(Long cup_id) {
-        return resultRepository.findResultsByCup_id(cup_id);
+    public List<Result> getByCupAndRound(Cup cup, Integer round) {
+        return resultRepository.findByCupAndRound(cup, round);
     }
 
     @Override
-    public List<Result> getByCupIdAndRound(Long cup_id, Integer round) {
-        return resultRepository.findResultsByCup_idAndRound(cup_id, round);
+    public List<Result> getByCupAndPilot(Cup cup, Pilot pilot) {
+        return resultRepository.findByCupAndPilot(cup, pilot);
     }
 
     @Override
-    public List<Result> getByCupIdAndPilotId(Long cup_id, Long pilot_id) {
-        return resultRepository.findResultsByCup_idAndPilot_id(cup_id, pilot_id);
-    }
-
-    @Override
-    public List<Result> getByCupIdAndPilotIdAndRound(Long cup_id, Long pilot_id, Integer round) {
-        return resultRepository.findResultsByCup_idAndPilotIdAndRound(cup_id, pilot_id, round);
+    public Result getByCupAndPilotAndRound(Cup cup, Pilot pilot, Integer round) {
+        return resultRepository.findByCupAndPilotAndRound(cup, pilot, round);
     }
 
     @Override
@@ -47,10 +44,5 @@ public class ResultServiceImpl implements ResultService {
     @Override
     public void saveAll(List<Result> results) {
         resultRepository.save(results);
-    }
-
-    @Override
-    public void removeById(Long id) {
-        resultRepository.delete(id);
     }
 }

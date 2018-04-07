@@ -1,12 +1,12 @@
 package f3f.core;
 
 import f3f.data_connector.entity.Cup;
-import f3f.data_connector.entity.Cup_pilot;
 import f3f.data_connector.entity.Result;
+import f3f.data_connector.entity.TotalResult;
 import f3f.data_connector.service.CupService;
-import f3f.data_connector.service.Cup_pilotService;
 import f3f.data_connector.service.PilotService;
 import f3f.data_connector.service.ResultService;
+import f3f.data_connector.service.TotalResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,10 +27,9 @@ public class MainController {
 
     @Autowired
     protected ResultService resultService;
-    
-    @Autowired
-    protected Cup_pilotService cup_pilotService;
 
+    @Autowired
+    protected TotalResultService totalResultService;
 
     @RequestMapping(path = "/cups", method = RequestMethod.GET)
     public @ResponseBody List<Cup> getAllCups() {
@@ -44,12 +43,12 @@ public class MainController {
 
     @RequestMapping(path = "/cup/{cup_id}/rounds", method = RequestMethod.GET)
     public @ResponseBody List<Result> getRoundsByCupId(@PathVariable Long cup_id) {
-        return resultService.getByCupId(cup_id);
+        return resultService.getByCup(cupService.getById(cup_id));
     }
 
     @RequestMapping(path = "/cup/{cup_id}/total", method = RequestMethod.GET)
-    public @ResponseBody List<Cup_pilot> getTotalByCupId(@PathVariable Long cup_id) {
-        return cup_pilotService.getByCupId(cup_id);
+    public @ResponseBody List<TotalResult> getTotalByCupId(@PathVariable Long cup_id) {
+        return totalResultService.getByCup(cupService.getById(cup_id));
     }
 
 }

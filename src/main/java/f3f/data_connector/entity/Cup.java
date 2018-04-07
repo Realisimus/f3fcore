@@ -1,6 +1,7 @@
 package f3f.data_connector.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 @Entity
@@ -12,12 +13,14 @@ public class Cup {
     @Column(name = "ID")
     private Long id;
 
+    @NotNull
     @Column(name = "NAME")
     private String name;
 
     @Column(name = "DESCRIPTION")
     private String description;
 
+    @NotNull
     @Column(name = "DATE")
     private Date date;
 
