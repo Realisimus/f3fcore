@@ -1,15 +1,16 @@
 package f3f.data_connector.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "RESULTS")
-public class Result implements Comparable<Result>{
+public class Result {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "PILOT_ID")
@@ -23,20 +24,21 @@ public class Result implements Comparable<Result>{
     private Integer round;
 
     @Column(name = "TIME")
-    private Integer time;
+    private BigDecimal time;
 
     @Column(name = "PENALTY")
     private Integer penalty;
 
     @Column(name = "SCORE")
-    private Integer score;
+    private BigDecimal score;
 
     @Column(name = "PERCENTAGES")
-    private Integer percentages;
+    private BigDecimal percentages;
 
     public Result() {}
 
-    public Result(Pilot pilot, Cup cup, Integer round, Integer time, Integer penalty) {
+    public Result(Integer id, Pilot pilot, Cup cup, Integer round, BigDecimal time, Integer penalty) {
+        this.id = id;
         this.pilot = pilot;
         this.cup = cup;
         this.round = round;
@@ -44,8 +46,12 @@ public class Result implements Comparable<Result>{
         this.penalty = penalty;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Pilot getPilot() {
@@ -72,11 +78,11 @@ public class Result implements Comparable<Result>{
         this.round = round;
     }
 
-    public Integer getTime() {
+    public BigDecimal getTime() {
         return time;
     }
 
-    public void setTime(Integer time) {
+    public void setTime(BigDecimal time) {
         this.time = time;
     }
 
@@ -88,25 +94,19 @@ public class Result implements Comparable<Result>{
         this.penalty = penalty;
     }
 
-    public Integer getScore() {
+    public BigDecimal getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(BigDecimal score) {
         this.score = score;
     }
 
-    public int getPercentages() {
+    public BigDecimal getPercentages() {
         return percentages;
     }
 
-    public void setPercentages(Integer percentages) {
+    public void setPercentages(BigDecimal percentages) {
         this.percentages = percentages;
     }
-
-    @Override
-    public int compareTo(Result r) {
-        return (int) ((r.getScore() - this.getScore()) * 100);
-    }
-
 }

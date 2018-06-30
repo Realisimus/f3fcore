@@ -11,7 +11,7 @@ public class Cup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long id;
+    private int id;
 
     @NotNull
     @Column(name = "NAME")
@@ -26,7 +26,7 @@ public class Cup {
 
     public Cup() {}
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 

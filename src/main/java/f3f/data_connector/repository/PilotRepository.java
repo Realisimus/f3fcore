@@ -8,9 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PilotRepository extends CrudRepository<Pilot, Long> {
-
-    @Query("select p from Pilot p where p.login = ?1")
-    Pilot getPilotByLogin(String login);
+public interface PilotRepository extends CrudRepository<Pilot, Integer> {
 
 }

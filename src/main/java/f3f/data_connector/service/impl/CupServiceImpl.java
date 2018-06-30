@@ -15,7 +15,7 @@ public class CupServiceImpl implements CupService {
     protected CupRepository cupRepository;
 
     @Override
-    public Cup getById(Long id) {
+    public Cup getById(Integer id) {
         return cupRepository.findOne(id);
     }
 
@@ -25,7 +25,7 @@ public class CupServiceImpl implements CupService {
     }
 
     @Override
-    public void removeById(Long id) {
+    public void removeById(Integer id) {
 
     }
 

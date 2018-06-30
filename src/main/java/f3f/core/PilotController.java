@@ -6,6 +6,7 @@ import f3f.data_connector.service.TotalResultService;
 import f3f.data_connector.service.PilotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,52 +16,48 @@ import java.util.List;
 @Controller
 public class PilotController {
 
-    @Autowired
-    protected PilotService pilotService;
+    private final PilotService pilotService;
+
+    private final TotalResultService totalResultService;
+
+    private final CupService cupService;
 
     @Autowired
-    protected TotalResultService totalResultService;
-
-    @Autowired
-    protected CupService cupService;
+    public PilotController(PilotService pilotService, TotalResultService totalResultService, CupService cupService) {
+        this.pilotService = pilotService;
+        this.totalResultService = totalResultService;
+        this.cupService = cupService;
+    }
 
     @RequestMapping(value = "/add_pilot", method = RequestMethod.POST)
-    public ResponseEntity savePilot(@RequestParam String login,
+    public ResponseEntity savePilot(Integer id,
+                                    String login,
                                     String first_name,
                                     String last_name,
                                     String license,
                                     String email,
                                     String phone,
                                     String city ) {
-        Pilot pilot = pilotService.getByLogin(login);
-        if (pilot != null) {
-            pilot.setLogin(login);
-            pilot.setFirst_name(first_name);
-            pilot.setLast_name(last_name);
-            pilot.setLicense(license);
-            pilot.setEmail(email);
-            pilot.setPhone(phone);
-            pilot.setCity(city);
-            pilotService.save(pilot);
-        } else {
-            Pilot newPilot = new Pilot(login, first_name, last_name, license, email, phone, city);
-            pilotService.save(newPilot);
-        }
+        Pilot pilot = new Pilot(id, login, first_name, last_name, license, email, phone, city);
+        pilotService.save(pilot);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/pilots", method = RequestMethod.GET)
-    public @ResponseBody List<Pilot> getAllPilots() {
+    @RequestMapping(path = "/pilots", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<Pilot> getAllPilots() {
         return pilotService.getAll();
     }
 
     @RequestMapping(path = "/pilot/{pilot_id}", method = RequestMethod.GET)
-    public @ResponseBody Pilot getPilotById(@PathVariable Long pilot_id) {
+    @ResponseBody
+    public Pilot getPilotById(@PathVariable Integer pilot_id) {
         return pilotService.getById(pilot_id);
     }
 
     @RequestMapping(path = "/pilots/{cup_id}", method = RequestMethod.GET)
-    public @ResponseBody List<Pilot> getPilotsByCupId(@PathVariable Long cup_id) {
+    @ResponseBody
+    public List<Pilot> getPilotsByCupId(@PathVariable Integer cup_id) {
         return totalResultService.getPilotsByCup(cupService.getById(cup_id));
     }
 }

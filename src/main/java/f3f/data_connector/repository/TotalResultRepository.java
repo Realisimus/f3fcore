@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TotalResultRepository extends CrudRepository<TotalResult, Long> {
+public interface TotalResultRepository extends CrudRepository<TotalResult, Integer> {
 
     @Query("select c from TotalResult c where c.cup = ?1")
     List<TotalResult> findByCup(Cup cup);

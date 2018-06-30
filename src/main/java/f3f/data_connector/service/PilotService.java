@@ -6,10 +6,9 @@ import java.util.List;
 
 public interface PilotService {
 
-    Pilot getById(Long id);
-    Pilot getByLogin(String login);
+    Pilot getById(Integer id);
     List<Pilot> getAll();
-    void removeById(Long id);
+    void removeById(Integer id);
     void save(Pilot pilot);
 
 }

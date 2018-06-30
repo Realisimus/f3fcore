@@ -1,10 +1,11 @@
 package f3f.data_connector.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "TOTAL_RESULTS")
-public class TotalResult implements Comparable<TotalResult>{
+public class TotalResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,13 +24,16 @@ public class TotalResult implements Comparable<TotalResult>{
     private Integer rank;
 
     @Column(name = "SCORE")
-    private Integer score;
+    private BigDecimal score;
 
     @Column(name = "PERCENTS")
-    private Integer percents;
+    private BigDecimal percents;
 
     @Column(name = "RAW_SCORE")
-    private Integer raw_score;
+    private BigDecimal raw_score;
+
+    @Column(name = "PENALTY")
+    private int penalty;
 
     public TotalResult() {
     }
@@ -67,33 +71,28 @@ public class TotalResult implements Comparable<TotalResult>{
         this.rank = rank;
     }
 
-    public Integer getScore() {
+    public BigDecimal getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(BigDecimal score) {
         this.score = score;
     }
 
-    public Integer getPercents() {
+    public BigDecimal getPercents() {
         return percents;
     }
 
-    public void setPercents(Integer percents) {
+    public void setPercents(BigDecimal percents) {
         this.percents = percents;
     }
 
-    public Integer getRaw_score() {
+    public BigDecimal getRaw_score() {
         return raw_score;
     }
 
-    public void setRaw_score(Integer raw_score) {
+    public void setRaw_score(BigDecimal raw_score) {
         this.raw_score = raw_score;
-    }
-
-    @Override
-    public int compareTo(TotalResult o) {
-        return o.getScore() - this.getScore();
     }
 }
 

@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface CupService {
 
-    Cup getById(Long id);
+    Cup getById(Integer id);
     List<Cup> getAll();
-    void removeById(Long id);
+    void removeById(Integer id);
     void save(Cup cup);
 
 }

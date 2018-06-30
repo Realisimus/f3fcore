@@ -19,13 +19,8 @@ public class PilotServiceImpl implements PilotService {
     protected TotalResultRepository totalResultRepository;
 
     @Override
-    public Pilot getById(Long id) {
+    public Pilot getById(Integer id) {
         return pilotRepository.findOne(id);
-    }
-
-    @Override
-    public Pilot getByLogin(String login) {
-        return pilotRepository.getPilotByLogin(login);
     }
 
     @Override
@@ -34,7 +29,7 @@ public class PilotServiceImpl implements PilotService {
     }
 
     @Override
-    public void removeById(Long id) {
+    public void removeById(Integer id) {
         pilotRepository.delete(id);
     }
 
