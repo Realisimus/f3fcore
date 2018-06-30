@@ -18,4 +18,7 @@ public interface TotalResultRepository extends CrudRepository<TotalResult, Integ
     @Query("select c.pilot from TotalResult c where c.cup = ?1")
     List<Pilot> findPilotsByCup(Cup cup);
 
+    @Query("select count(c) from TotalResult c where c.cup = ?1")
+    Integer findNumberOfPilotsByCup(Cup cup);
+
 }

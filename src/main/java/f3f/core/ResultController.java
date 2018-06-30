@@ -29,7 +29,6 @@ public class ResultController {
                                   @RequestParam Integer round,
                                   @RequestParam BigDecimal time,
                                   Integer penalty) {
-        time = time.setScale(2, RoundingMode.DOWN);
         addingTime.add(id,pilot_id,cup_id,round,time,penalty);
         return new ResponseEntity(HttpStatus.OK);
     }

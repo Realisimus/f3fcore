@@ -1,5 +1,6 @@
 package f3f.core.model;
 
+import f3f.core.model.tools.SortTotalResults;
 import f3f.data_connector.entity.Cup;
 import f3f.data_connector.entity.Pilot;
 import f3f.data_connector.entity.Result;
@@ -42,6 +43,7 @@ public class AddingTime {
                      Integer penalty) {
         Pilot pilot = pilotService.getById(pilot_id);
         Cup cup = cupService.getById(cup_id);
+        time = time.setScale(2, RoundingMode.DOWN);
         Result result = new Result(id, pilot, cup, round, time, penalty);
         resultService.save(result);
         updateRoundScore(cup, round);
@@ -49,9 +51,8 @@ public class AddingTime {
 
     private void updateRoundScore(Cup cup, Integer round) {
         List<Result> results = resultService.getByCupAndRound(cup, round);
-        List<Pilot> pilots = totalResultService.getPilotsByCup(cup);
-
-        if (results.size() == pilots.size()) {
+        Integer numberOfPilots = totalResultService.getNumberOfPilotsByCup(cup);
+        if (results.size() == numberOfPilots) {
             results = updateResultsScore(results);
             results = updateResultsPercentages(results);
             resultService.saveAll(results);

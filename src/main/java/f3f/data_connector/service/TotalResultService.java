@@ -10,6 +10,7 @@ public interface TotalResultService {
 
     List<TotalResult> getByCup(Cup cup);
     List<Pilot> getPilotsByCup(Cup cup);
+    Integer getNumberOfPilotsByCup(Cup cup);
     void save(TotalResult totalResult);
     void saveAll(List<TotalResult> totalResults);
 

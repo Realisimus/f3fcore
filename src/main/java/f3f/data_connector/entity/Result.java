@@ -17,8 +17,8 @@ public class Result {
     private Pilot pilot;
 
     @ManyToOne
-    @JoinColumn(name = "CUP_ID")
-    private Cup cup;
+    @JoinColumn(name = "CUP_DETAILS_ID")
+    private CupDetail cupDetail;
 
     @Column(name = "ROUND")
     private Integer round;
@@ -37,10 +37,10 @@ public class Result {
 
     public Result() {}
 
-    public Result(Integer id, Pilot pilot, Cup cup, Integer round, BigDecimal time, Integer penalty) {
+    public Result(Integer id, Pilot pilot, CupDetail cupDetail, Integer round, BigDecimal time, Integer penalty) {
         this.id = id;
         this.pilot = pilot;
-        this.cup = cup;
+        this.cupDetail = cupDetail;
         this.round = round;
         this.time = time;
         this.penalty = penalty;
@@ -62,12 +62,12 @@ public class Result {
         this.pilot = pilot;
     }
 
-    public Cup getCup() {
-        return cup;
+    public CupDetail getCupDetail() {
+        return cupDetail;
     }
 
-    public void setCup(Cup cup) {
-        this.cup = cup;
+    public void setCupDetail(CupDetail cupDetail) {
+        this.cupDetail = cupDetail;
     }
 
     public Integer getRound() {

@@ -1,4 +1,4 @@
-package f3f.core.model;
+package f3f.core.model.tools;
 
 import f3f.data_connector.entity.TotalResult;
 

@@ -13,8 +13,12 @@ import java.util.List;
 @Service
 public class TotalResultServiceImpl implements TotalResultService {
 
+    private final TotalResultRepository totalResultRepository;
+
     @Autowired
-    protected TotalResultRepository totalResultRepository;
+    public TotalResultServiceImpl(TotalResultRepository totalResultRepository) {
+        this.totalResultRepository = totalResultRepository;
+    }
 
     @Override
     public List<TotalResult> getByCup(Cup cup) {
@@ -24,6 +28,11 @@ public class TotalResultServiceImpl implements TotalResultService {
     @Override
     public List<Pilot> getPilotsByCup(Cup cup) {
         return totalResultRepository.findPilotsByCup(cup);
+    }
+
+    @Override
+    public Integer getNumberOfPilotsByCup(Cup cup) {
+        return totalResultRepository.findNumberOfPilotsByCup(cup);
     }
 
     @Override
